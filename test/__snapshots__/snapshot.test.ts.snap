@@ -142,6 +142,9 @@ Object {
       "Type": "AWS::ApiGateway::Deployment",
     },
     "sampleApigatewayDeploymentStageprodD296BCD4": Object {
+      "DependsOn": Array [
+        "sampleApigatewayAccountF0105C64",
+      ],
       "Properties": Object {
         "DeploymentId": Object {
           "Ref": "sampleApigatewayDeployment0AA751E7620febe645b3be96e3e402a2cff9abf6",
