@@ -1,0 +1,518 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot test 1`] = `
+Object {
+  "Outputs": Object {
+    "sampleApigatewayEndpoint507DAC0E": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "sampleApigateway296CDA9F",
+            },
+            ".execute-api.",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            Object {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            Object {
+              "Ref": "sampleApigatewayDeploymentStageprodD296BCD4",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {},
+  "Resources": Object {
+    "GETsample810A46C2": Object {
+      "DependsOn": Array [
+        "iamRoleForLambdaD6E2D9BB",
+      ],
+      "Properties": Object {
+        "Code": Object {},
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+          },
+        },
+        "Handler": "index.handler",
+        "MemorySize": 128,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "iamRoleForLambdaD6E2D9BB",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Timeout": 30,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "iamRoleForLambdaD6E2D9BB": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "RoleName": "snapshot-test-lambda-role",
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "sampleApigateway296CDA9F": Object {
+      "Properties": Object {
+        "Name": "snapshot-test-apigateway",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "sampleApigatewayAccountF0105C64": Object {
+      "DependsOn": Array [
+        "sampleApigateway296CDA9F",
+      ],
+      "Properties": Object {
+        "CloudWatchRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "sampleApigatewayCloudWatchRoleD5761E3C",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+    },
+    "sampleApigatewayCloudWatchRoleD5761E3C": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "sampleApigatewayDeployment0AA751E7620febe645b3be96e3e402a2cff9abf6": Object {
+      "DependsOn": Array [
+        "sampleApigatewaymessagesmessageidGETAC1B9127",
+        "sampleApigatewaymessagesmessageidE3BF3B45",
+        "sampleApigatewaymessagesD0AB0CAB",
+        "sampleApigatewaysampleGET82BDBA4F",
+        "sampleApigatewaysample8A3A3DE8",
+      ],
+      "Properties": Object {
+        "Description": "Automatically created by the RestApi construct",
+        "RestApiId": Object {
+          "Ref": "sampleApigateway296CDA9F",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "sampleApigatewayDeploymentStageprodD296BCD4": Object {
+      "Properties": Object {
+        "DeploymentId": Object {
+          "Ref": "sampleApigatewayDeployment0AA751E7620febe645b3be96e3e402a2cff9abf6",
+        },
+        "MethodSettings": Array [
+          Object {
+            "DataTraceEnabled": true,
+            "HttpMethod": "*",
+            "LoggingLevel": "INFO",
+            "MetricsEnabled": true,
+            "ResourcePath": "/*",
+          },
+        ],
+        "RestApiId": Object {
+          "Ref": "sampleApigateway296CDA9F",
+        },
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "sampleApigatewaymessagesD0AB0CAB": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "sampleApigateway296CDA9F",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "messages",
+        "RestApiId": Object {
+          "Ref": "sampleApigateway296CDA9F",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "sampleApigatewaymessagesmessageidE3BF3B45": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "sampleApigatewaymessagesD0AB0CAB",
+        },
+        "PathPart": "{message_id}",
+        "RestApiId": Object {
+          "Ref": "sampleApigateway296CDA9F",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "sampleApigatewaymessagesmessageidGETAC1B9127": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "GETsample810A46C2",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "sampleApigatewaymessagesmessageidE3BF3B45",
+        },
+        "RestApiId": Object {
+          "Ref": "sampleApigateway296CDA9F",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "sampleApigatewaymessagesmessageidGETApiPermissionTestsnapshotTestStacksampleApigateway9E73A7EEGETmessagesmessageid2A68341D": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "GETsample810A46C2",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "sampleApigateway296CDA9F",
+              },
+              "/test-invoke-stage/GET/messages/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "sampleApigatewaymessagesmessageidGETApiPermissionsnapshotTestStacksampleApigateway9E73A7EEGETmessagesmessageid28ACDF0D": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "GETsample810A46C2",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "sampleApigateway296CDA9F",
+              },
+              "/",
+              Object {
+                "Ref": "sampleApigatewayDeploymentStageprodD296BCD4",
+              },
+              "/GET/messages/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "sampleApigatewaysample8A3A3DE8": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "sampleApigateway296CDA9F",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "sample",
+        "RestApiId": Object {
+          "Ref": "sampleApigateway296CDA9F",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "sampleApigatewaysampleApiKey1E0AEEE0": Object {
+      "Properties": Object {
+        "Enabled": true,
+        "Name": "snapshot-test-sample-api-key",
+        "StageKeys": Array [
+          Object {
+            "RestApiId": Object {
+              "Ref": "sampleApigateway296CDA9F",
+            },
+            "StageName": Object {
+              "Ref": "sampleApigatewayDeploymentStageprodD296BCD4",
+            },
+          },
+        ],
+      },
+      "Type": "AWS::ApiGateway::ApiKey",
+    },
+    "sampleApigatewaysampleApiUsagePlan9A3BD59E": Object {
+      "Properties": Object {
+        "ApiStages": Array [
+          Object {
+            "ApiId": Object {
+              "Ref": "sampleApigateway296CDA9F",
+            },
+            "Stage": Object {
+              "Ref": "sampleApigatewayDeploymentStageprodD296BCD4",
+            },
+            "Throttle": Object {},
+          },
+        ],
+      },
+      "Type": "AWS::ApiGateway::UsagePlan",
+    },
+    "sampleApigatewaysampleApiUsagePlanUsagePlanKeyResourcesnapshotTestStacksampleApigatewaysampleApiKey7B9DEBC3F1967AFB": Object {
+      "Properties": Object {
+        "KeyId": Object {
+          "Ref": "sampleApigatewaysampleApiKey1E0AEEE0",
+        },
+        "KeyType": "API_KEY",
+        "UsagePlanId": Object {
+          "Ref": "sampleApigatewaysampleApiUsagePlan9A3BD59E",
+        },
+      },
+      "Type": "AWS::ApiGateway::UsagePlanKey",
+    },
+    "sampleApigatewaysampleGET82BDBA4F": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "GETsample810A46C2",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "sampleApigatewaysample8A3A3DE8",
+        },
+        "RestApiId": Object {
+          "Ref": "sampleApigateway296CDA9F",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "sampleApigatewaysampleGETApiPermissionTestsnapshotTestStacksampleApigateway9E73A7EEGETsampleC07BECB0": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "GETsample810A46C2",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "sampleApigateway296CDA9F",
+              },
+              "/test-invoke-stage/GET/sample",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "sampleApigatewaysampleGETApiPermissionsnapshotTestStacksampleApigateway9E73A7EEGETsample405319C9": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "GETsample810A46C2",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "sampleApigateway296CDA9F",
+              },
+              "/",
+              Object {
+                "Ref": "sampleApigatewayDeploymentStageprodD296BCD4",
+              },
+              "/GET/sample",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
